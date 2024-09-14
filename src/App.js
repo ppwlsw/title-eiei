@@ -15,6 +15,7 @@ import Icon from './components/Icon';
 
 import packageJson from '../package.json';
 import { getHost } from './services/hostService';
+import ComboChart from './components/ComboChart';
 
 function App() {
   const [sixMonthsTurnupRatioData, setSixMonthsTurnupRatioData] = useState({});
@@ -233,6 +234,16 @@ function App() {
         break;
     }
   };
+  const [seasonalBooking, setSeasonalBooking] = useState([]);
+  const [seasonalCheckin, setSeasonalCheckin] = useState([]);
+
+  useEffect(() => {
+    axios.get(`${getHost()}/api/v1/oneYearSeasonalBookingCheckInData`, {}).then((response) => {
+      const data = response.data.data;
+      setSeasonalBooking(data.booking);
+      setSeasonalCheckin(data.checkin);
+    });
+  }, []);
 
   return (
     <div className='App'>
@@ -259,7 +270,9 @@ function App() {
             </ButtonBar>
           </Header>
           <LineChart data={seasonalIncome} yAxisLabel={'Income ($)'} displayLegend />
-            {/* TODO: Add combo chart */}
+          {/* TODO: Add combo chart */}
+
+          <ComboChart data={[seasonalBooking, seasonalCheckin]} />
         </div>
         <div className='grid col-span-2 chart-container'>
           <Header className='mb-4'>

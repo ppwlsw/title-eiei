@@ -1,21 +1,22 @@
 import Chart from './Chart';
 
 function ComboChart({ data, title, yAxis1Label, yAxis2Label, displayLegend = false }) {
+  console.log('data in combo chart', data);
   const config = {
     data: {
       labels: ['January', 'February', 'March', 'April', 'May', 'June'],
       datasets: [
         {
           type: 'line',
-          label: '', // TODO: add label for first data
-          data: [], // TODO: pass first data here
+          label: yAxis1Label, // TODO: add label for first data
+          data: data[0], // TODO: pass first data here
           yAxisID: 'yAxis1',
           fill: true, // not fill the area under the line
         },
         {
           type: 'bar',
-          label: '', // TODO: add label for second data
-          data: [], // TODO: pass second data here
+          label: yAxis2Label, // TODO: add label for second data
+          data: data[1], // TODO: pass second data here
           yAxisID: 'yAxis2',
         },
       ],
