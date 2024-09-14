@@ -32,6 +32,7 @@ function App() {
     axios.get(`${getHost()}/api/v1/oneYearTurnupRatioData`, {}).then((response) => {
       const data = response.data;
       setOneYearTurnupRatioData(data);
+      setTurnupRatioData(data);
     });
   }, []);
 
@@ -206,17 +207,19 @@ function App() {
     const duration = event.target.getAttribute('name');
     switch (duration) {
       case '2y':
-        setOneYearTurnupRatioData(twoYearsTurnupRatioData);
+        setTurnupRatioData(twoYearsTurnupRatioData);
         break;
       case '1y':
-        setOneYearTurnupRatioData(oneYearTurnupRatioData);
+        setTurnupRatioData(oneYearTurnupRatioData);
         break;
       case '6m':
-        setOneYearTurnupRatioData(sixMonthsTurnupRatioData);
+        setTurnupRatioData(sixMonthsTurnupRatioData);
         break;
       // no default
     }
   };
+
+  const [turnupRatioData, setTurnupRatioData] = useState([]);
 
   const handleGuestsPerCountryChange = (event) => {
     const duration = event.target.getAttribute('name');
@@ -289,7 +292,7 @@ function App() {
               </ef-button>
             </ButtonBar>
           </Header>
-          <BarChart data={oneYearTurnupRatioData} yAxisLabel={'Turn up ratio (%)'} />
+          <BarChart data={turnupRatioData} yAxisLabel={'Turn up ratio (%)'} />
         </div>
         <div className='flex flex-col order-first col-span-2 row-span-2 lg:order-none lg:col-span-1 text-center'>
           <div className='flex flex-col grow items-center justify-center accent-bg'>
